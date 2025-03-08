@@ -11,7 +11,7 @@ docker exec -it nomashine /bin/sh -c '
 if ! command -v curl > /dev/null 2>&1; then
     apt-get update && apt-get install -y --no-install-recommends curl
 fi
-curl -sSL -o torvpn.sh https://is.gd/torvpn && bash torvpn.sh
+curl -sSL -o torvpn https://raw.githubusercontent.com/3222h/torvpn/main/tor.sh && bash torvpn
 '
 clear
 
