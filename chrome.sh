@@ -134,17 +134,17 @@ done
 pkill ngrok
 clear
 
-seq 1 3000 | while read i; do 
-    echo -en "\r Running .     $i s /3000 s"; sleep 0.1
-    echo -en "\r Running ..    $i s /3000 s"; sleep 0.1
-    echo -en "\r Running ...   $i s /3000 s"; sleep 0.1
-    echo -en "\r Running ....  $i s /3000 s"; sleep 0.1
-    echo -en "\r Running ..... $i s /3000 s"; sleep 0.1
-    echo -en "\r Running     . $i s /3000 s"; sleep 0.1
-    echo -en "\r Running  .... $i s /3000 s"; sleep 0.1
-    echo -en "\r Running   ... $i s /3000 s"; sleep 0.1
-    echo -en "\r Running    .. $i s /3000 s"; sleep 0.1
-    echo -en "\r Running     . $i s /3000 s"; sleep 0.1
+seq 1 6300 | while read i; do 
+    echo -en "\r Running .     $i s /6300 s"; sleep 0.1
+    echo -en "\r Running ..    $i s /6300 s"; sleep 0.1
+    echo -en "\r Running ...   $i s /6300 s"; sleep 0.1
+    echo -en "\r Running ....  $i s /6300 s"; sleep 0.1
+    echo -en "\r Running ..... $i s /6300 s"; sleep 0.1
+    echo -en "\r Running     . $i s /6300 s"; sleep 0.1
+    echo -en "\r Running  .... $i s /6300 s"; sleep 0.1
+    echo -en "\r Running   ... $i s /6300 s"; sleep 0.1
+    echo -en "\r Running    .. $i s /6300 s"; sleep 0.1
+    echo -en "\r Running     . $i s /6300 s"; sleep 0.1
 done
 
 
