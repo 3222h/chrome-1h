@@ -150,8 +150,9 @@ done
 
 
 clear
-
-
+CRP=$(cat ./STOP-URL)
+gh codespace ports visibility 3000:private --codespace $CRP
+sleep 5
 CRP=$(cat ./STOP-URL)
 
 gh codespace stop -c $CRP
