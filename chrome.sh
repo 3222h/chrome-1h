@@ -134,26 +134,39 @@ done
 pkill ngrok
 clear
 
-seq 1 3000 | while read i; do 
-    echo -en "\r Running .     $i s /3000 s"; sleep 0.1
-    echo -en "\r Running ..    $i s /3000 s"; sleep 0.1
-    echo -en "\r Running ...   $i s /3000 s"; sleep 0.1
-    echo -en "\r Running ....  $i s /3000 s"; sleep 0.1
-    echo -en "\r Running ..... $i s /3000 s"; sleep 0.1
-    echo -en "\r Running     . $i s /3000 s"; sleep 0.1
-    echo -en "\r Running  .... $i s /3000 s"; sleep 0.1
-    echo -en "\r Running   ... $i s /3000 s"; sleep 0.1
-    echo -en "\r Running    .. $i s /3000 s"; sleep 0.1
-    echo -en "\r Running     . $i s /3000 s"; sleep 0.1
+seq 1 4800 | while read i; do 
+    echo -en "\r Running .     $i s /4800 s"; sleep 0.1
+    echo -en "\r Running ..    $i s /4800 s"; sleep 0.1
+    echo -en "\r Running ...   $i s /4800 s"; sleep 0.1
+    echo -en "\r Running ....  $i s /4800 s"; sleep 0.1
+    echo -en "\r Running ..... $i s /4800 s"; sleep 0.1
+    echo -en "\r Running     . $i s /4800 s"; sleep 0.1
+    echo -en "\r Running  .... $i s /4800 s"; sleep 0.1
+    echo -en "\r Running   ... $i s /4800 s"; sleep 0.1
+    echo -en "\r Running    .. $i s /4800 s"; sleep 0.1
+    echo -en "\r Running     . $i s /4800 s"; sleep 0.1
 done
-
-
 
 
 clear
 CRP=$(cat ./STOP-URL)
 gh codespace ports visibility 3000:private --codespace $CRP
-sleep 5
+
+seq 1 30 | while read i; do 
+    echo -en "\r Running .     $i s /30 s"; sleep 0.1
+    echo -en "\r Running ..    $i s /30 s"; sleep 0.1
+    echo -en "\r Running ...   $i s /30 s"; sleep 0.1
+    echo -en "\r Running ....  $i s /30 s"; sleep 0.1
+    echo -en "\r Running ..... $i s /30 s"; sleep 0.1
+    echo -en "\r Running     . $i s /30 s"; sleep 0.1
+    echo -en "\r Running  .... $i s /30 s"; sleep 0.1
+    echo -en "\r Running   ... $i s /30 s"; sleep 0.1
+    echo -en "\r Running    .. $i s /30 s"; sleep 0.1
+    echo -en "\r Running     . $i s /30 s"; sleep 0.1
+done
+clear
+
+
 CRP=$(cat ./STOP-URL)
 
 gh codespace stop -c $CRP
