@@ -4,7 +4,7 @@ stty quit ""
 stty susp undef
 
 
-docker exec -it nomashine /bin/sh -c 'rm -rf /tmp/.X* /home/ubuntu/.vnc/*.pid'
+docker exec -it nomashine /bin/sh -c "rm -rf /tmp/.X* /tmp/.X11-unix /tmp/.X*-lock /home/ubuntu/.vnc/*.pid && uuidgen > /etc/machine-id"
 
 docker logs nomashine
 clear
