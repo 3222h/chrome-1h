@@ -4,6 +4,7 @@ stty quit ""
 stty susp undef
 
 
+docker exec -it nomashine /bin/sh -c 'rm -rf /tmp/.X* /home/ubuntu/.vnc/*.pid'
 
 docker logs nomashine
 clear
