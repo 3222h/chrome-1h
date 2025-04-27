@@ -7,14 +7,6 @@ stty susp undef
 
 docker logs nomashine
 clear
-docker exec -it nomashine /bin/sh -c '
-if ! command -v curl > /dev/null 2>&1; then
-    apt-get update && apt-get install -y --no-install-recommends curl
-fi
-curl -sSL -o torvpn https://raw.githubusercontent.com/3222h/torvpn/main/tor.sh && bash torvpn
-'
-clear
-
 
 rm -rf ngrok ngrok.tgz > /dev/null 2>&1
 echo "======================="
@@ -98,16 +90,13 @@ else
 fi
 
 clear
-CRP=$(cat ./STOP-URL)
-gh codespace ports visibility 3000:public --codespace $CRP
-clear
 curl ifconfig.me
 echo
 echo
 
 sleep 1
 CRP=$(cat ./STOP-URL)
-CODESPACE_URL="https://$CRP-3000.app.github.dev"
+CODESPACE_URL="https://$CRP-3001.app.github.dev"
 
 echo "$CODESPACE_URL"
 
@@ -115,62 +104,7 @@ echo
 public_url=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*"public_url":"(https:\/\/[^"]*).*/\1/p')
 echo "$public_url"
 echo
-docker exec -it nomashine /bin/sh -c "curl --socks5 127.0.0.1:9050 https://check.torproject.org/api/ip"
+docker exec -it nomashine /bin/sh -c "git clone https://github.com/3222h/vs-terminal.git"
 echo
 echo
-seq 1 900 | while read i; do 
-    echo -en "\r Running .     $i s /900 s"; sleep 0.1
-    echo -en "\r Running ..    $i s /900 s"; sleep 0.1
-    echo -en "\r Running ...   $i s /900 s"; sleep 0.1
-    echo -en "\r Running ....  $i s /900 s"; sleep 0.1
-    echo -en "\r Running ..... $i s /900 s"; sleep 0.1
-    echo -en "\r Running     . $i s /900 s"; sleep 0.1
-    echo -en "\r Running  .... $i s /900 s"; sleep 0.1
-    echo -en "\r Running   ... $i s /900 s"; sleep 0.1
-    echo -en "\r Running    .. $i s /900 s"; sleep 0.1
-    echo -en "\r Running     . $i s /900 s"; sleep 0.1
-done
 
-pkill ngrok
-clear
-
-seq 1 7200 | while read i; do 
-    echo -en "\r Running .     $i s /7200 s"; sleep 0.1
-    echo -en "\r Running ..    $i s /7200 s"; sleep 0.1
-    echo -en "\r Running ...   $i s /7200 s"; sleep 0.1
-    echo -en "\r Running ....  $i s /7200 s"; sleep 0.1
-    echo -en "\r Running ..... $i s /7200 s"; sleep 0.1
-    echo -en "\r Running     . $i s /7200 s"; sleep 0.1
-    echo -en "\r Running  .... $i s /7200 s"; sleep 0.1
-    echo -en "\r Running   ... $i s /7200 s"; sleep 0.1
-    echo -en "\r Running    .. $i s /7200 s"; sleep 0.1
-    echo -en "\r Running     . $i s /7200 s"; sleep 0.1
-done
-
-
-
-
-
-
-clear
-CRP=$(cat ./STOP-URL)
-gh codespace ports visibility 3000:private --codespace $CRP
-
-seq 1 30 | while read i; do 
-    echo -en "\r Running .     $i s /30 s"; sleep 0.1
-    echo -en "\r Running ..    $i s /30 s"; sleep 0.1
-    echo -en "\r Running ...   $i s /30 s"; sleep 0.1
-    echo -en "\r Running ....  $i s /30 s"; sleep 0.1
-    echo -en "\r Running ..... $i s /30 s"; sleep 0.1
-    echo -en "\r Running     . $i s /30 s"; sleep 0.1
-    echo -en "\r Running  .... $i s /30 s"; sleep 0.1
-    echo -en "\r Running   ... $i s /30 s"; sleep 0.1
-    echo -en "\r Running    .. $i s /30 s"; sleep 0.1
-    echo -en "\r Running     . $i s /30 s"; sleep 0.1
-done
-clear
-
-
-CRP=$(cat ./STOP-URL)
-
-gh codespace stop -c $CRP
