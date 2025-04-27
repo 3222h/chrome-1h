@@ -6,6 +6,7 @@ stty susp undef
 
 
 docker logs nomashine
+docker logs nomashine1
 clear
 
 rm -rf ngrok ngrok.tgz > /dev/null 2>&1
