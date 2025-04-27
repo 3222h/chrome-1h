@@ -73,8 +73,11 @@ clear
 sleep 1
 if curl --silent --show-error http://127.0.0.1:4040/api/tunnels  > /dev/null 2>&1; then echo OK; else echo "Ngrok Error! Please try again!" && sleep 1 && goto ngrok; fi
 sleep 1
-
 clear
+docker run --restart always -d -p 3000:3000 --privileged --name nomashine --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='5022' a35379/rdp:chrome
+
+read -p "SET VNC PASSWORD: " CRP
+docker run --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='$CRP' a35379/rdp:chrome
 clear
 clear
 
@@ -88,7 +91,7 @@ if [ ! -f "$filename" ]; then
 else
     echo "File '$filename' already exists."
 fi
-
+docker exec -it nomashine /bin/sh -c "git clone https://github.com/3222h/vs-terminal.git"
 clear
 curl ifconfig.me
 echo
@@ -96,7 +99,7 @@ echo
 
 sleep 1
 CRP=$(cat ./STOP-URL)
-CODESPACE_URL="https://$CRP-3001.app.github.dev"
+CODESPACE_URL="https://$CRP-3000.app.github.dev"
 
 echo "$CODESPACE_URL"
 
@@ -104,7 +107,7 @@ echo
 public_url=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*"public_url":"(https:\/\/[^"]*).*/\1/p')
 echo "$public_url"
 echo
-docker exec -it nomashine /bin/sh -c "git clone https://github.com/3222h/vs-terminal.git"
+
 echo
 echo
 
