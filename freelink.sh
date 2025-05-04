@@ -7,6 +7,7 @@ stty susp undef
 
 docker logs nomashine
 docker logs nomashine1
+docker logs nomashine2
 clear
 
 rm -rf ngrok ngrok.tgz > /dev/null 2>&1
@@ -62,7 +63,7 @@ if [ -s "$REGION_FILE" ]; then
     echo "Ngrok region read from file: $CRP."
 else
     # If the file doesn't exist or is empty, ask for the region
-    read -p "Choose Ngrok region ( us, eu, ap, au, sa, jp, in ): " CRP
+    read -p "Choose Ngrok region ( us, eu, ap, au, sa, jp ): " CRP
     # Save the region to the REGION file
     echo "$CRP" > "$REGION_FILE"
     echo "Ngrok region saved to file."
@@ -70,6 +71,7 @@ fi
 
 # Start ngrok with the saved region
 ./ngrok http --region $CRP 3001 &>/dev/null &
+./ngrok http --region in 3002 &>/dev/null &
 clear
 sleep 1
 if curl --silent --show-error http://127.0.0.1:4040/api/tunnels  > /dev/null 2>&1; then echo OK; else echo "Ngrok Error! Please try again!" && sleep 1 && goto ngrok; fi
@@ -79,6 +81,7 @@ docker run --restart always -d -p 3000:3000 --privileged --name nomashine --cap-
 
 read -p "SET VNC PASSWORD: " CRP
 docker run --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$CRP" a35379/rdp:chrome
+docker run --restart always -d -p 3002:3000 --privileged --name nomashine2 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$CRP" a35379/rdp:chrome
 clear
 clear
 
@@ -108,7 +111,10 @@ echo
 public_url=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*"public_url":"(https:\/\/[^"]*).*/\1/p')
 echo "$public_url"
 echo
-
+echo
+public_url2=$(curl --silent --show-error http://127.0.0.1:4041/api/tunnels | sed -nE 's/.*"public_url":"(https:\/\/[^"]*).*/\1/p')
+echo "$public_url2"
+echo
 echo
 echo
 
