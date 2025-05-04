@@ -100,7 +100,9 @@ read -p "SET VNC PASSWORD: " CRP
 
 # Assign selected tag
 TAG="${TAGS[$TAG_INDEX]}"
-docker run --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='$CRP' a35379/rdp:$TAG
+CONTAINER_NAME="nomashine$TAG_INDEX"
+
+docker run --restart always -d -p 3001:3000 --privileged --name "$CONTAINER_NAME" --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='$CRP' a35379/rdp:$TAG
 clear
 clear
 
