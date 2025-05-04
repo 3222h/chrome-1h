@@ -77,8 +77,30 @@ sleep 1
 clear
 docker run --restart always -d -p 3000:3000 --privileged --name nomashine --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='5022' a35379/rdp:chrome
 
+# Define Docker tags
+TAGS=("chrome" "9" "go1" "go" "c" "latest")
+
+# Print tag info like region selection
+echo "======================="
+echo "Choose Docker Image Tag"
+echo "======================="
+echo "0 - chrome"
+echo "1 - 9"
+echo "2 - go1"
+echo "3 - go"
+echo "4 - c"
+echo "5 - latest"
+echo "======================="
+
+# Ask for tag number
+read -p "SELECT TAG NUMBER: " TAG_INDEX
+
+# Ask for VNC password
 read -p "SET VNC PASSWORD: " CRP
-docker run --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='$CRP' a35379/rdp:chrome
+
+# Assign selected tag
+TAG="${TAGS[$TAG_INDEX]}"
+docker run --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='$CRP' a35379/rdp:$TAG
 clear
 clear
 
