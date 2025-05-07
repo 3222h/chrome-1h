@@ -114,10 +114,12 @@ echo
 public_url=$(curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*"public_url":"(https:\/\/[^"]*).*/\1/p')
 echo "$public_url"
 echo
+sleep 2
 echo
 public_url2=$(curl --silent --show-error http://127.0.0.1:4041/api/tunnels | sed -nE 's/.*"public_url":"(https:\/\/[^"]*).*/\1/p')
 echo "$public_url2"
 echo
+sleep 2
 echo
 public_url3=$(curl --silent --show-error http://127.0.0.1:4042/api/tunnels | sed -nE 's/.*"public_url":"(https:\/\/[^"]*).*/\1/p')
 echo "$public_url3"
