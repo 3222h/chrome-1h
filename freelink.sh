@@ -72,7 +72,6 @@ fi
 # Start ngrok with the saved region
 ./ngrok http --region $CRP 3001 &>/dev/null &
 ./ngrok http --region in 3002 &>/dev/null &
-./ngrok http --region jp 3003 &>/dev/null &
 clear
 sleep 1
 if curl --silent --show-error http://127.0.0.1:4040/api/tunnels  > /dev/null 2>&1; then echo OK; else echo "Ngrok Error! Please try again!" && sleep 1 && goto ngrok; fi
@@ -83,7 +82,7 @@ docker run --restart always -d -p 3000:3000 --privileged --name nomashine --cap-
 read -p "SET VNC PASSWORD: " CRP
 docker run --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$CRP" a35379/rdp:c
 docker run --restart always -d -p 3002:3000 --privileged --name nomashine2 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$CRP" a35379/rdp:chrome
-docker run --restart always -d -p 3003:3000 --privileged --name nomashine3 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$CRP" a35379/rdp:go1
+
 
 clear
 clear
@@ -118,11 +117,6 @@ sleep 2
 echo
 public_url2=$(curl --silent --show-error http://127.0.0.1:4041/api/tunnels | sed -nE 's/.*"public_url":"(https:\/\/[^"]*).*/\1/p')
 echo "$public_url2"
-echo
-sleep 2
-echo
-public_url3=$(curl --silent --show-error http://127.0.0.1:4042/api/tunnels | sed -nE 's/.*"public_url":"(https:\/\/[^"]*).*/\1/p')
-echo "$public_url3"
 echo
 echo
 echo
