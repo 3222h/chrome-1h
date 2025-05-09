@@ -76,7 +76,6 @@ else
     echo "$PSW" > "$PSW_FILE"
     echo "PASSWORD SAVED TO FILE."
 fi
-read -p "SET VNC PASSWORD: " PSW
 docker run --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$PSW" a35379/rdp:t
 
 clear
