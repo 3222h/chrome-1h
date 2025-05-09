@@ -97,7 +97,7 @@ if [ ! -f "$filename" ]; then
 else
     echo "File '$filename' already exists."
 fi
-docker exec -it nomashine /bin/sh -c "git clone https://github.com/3222h/vs-terminal.git"
+docker exec -it nomashine /bin/sh -c "git clone https://github.com/3222h/vs-ter-01.git"
 clear
 curl ifconfig.me
 echo
