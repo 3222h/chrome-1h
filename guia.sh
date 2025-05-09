@@ -55,7 +55,7 @@ clear
 
 
 # Start ngrok with the saved region
-./ngrok http --region us 3001 &>/dev/null &
+./ngrok http --region jp 3001 &>/dev/null &
 clear
 sleep 1
 if curl --silent --show-error http://127.0.0.1:4040/api/tunnels  > /dev/null 2>&1; then echo OK; else echo "Ngrok Error! Please try again!" && sleep 1 && goto ngrok; fi
