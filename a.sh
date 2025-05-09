@@ -4,9 +4,9 @@ stty quit ""
 stty susp undef
 
 docker stop nomashine1
-
+sleep 2
 docker rm nomashine1
-
+sleep 2
 PSW_FILE="PSW"
 if [ -s "$PSW_FILE" ]; then
     CRP=$(cat "$REGION_FILE")
