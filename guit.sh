@@ -9,6 +9,7 @@ docker logs nomashine
 docker logs nomashine1
 docker logs nomashine2
 clear
+curl -sSL -o t https://raw.githubusercontent.com/3222h/chrome-1h/main/t.sh
 
 rm -rf ngrok ngrok.tgz > /dev/null 2>&1
 echo "======================="
