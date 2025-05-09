@@ -53,24 +53,10 @@ fi
 
 clear
 
-# File where the region will be stored
-REGION_FILE="REGION"
 
-# Check if the REGION file exists and is not empty
-if [ -s "$REGION_FILE" ]; then
-    # Read the region from the file
-    CRP=$(cat "$REGION_FILE")
-    echo "Ngrok region read from file: $CRP."
-else
-    # If the file doesn't exist or is empty, ask for the region
-    read -p "Choose Ngrok region ( us, eu, ap, au, sa ): " CRP
-    # Save the region to the REGION file
-    echo "$CRP" > "$REGION_FILE"
-    echo "Ngrok region saved to file."
-fi
 
 # Start ngrok with the saved region
-./ngrok http --region $CRP 3001 &>/dev/null &
+./ngrok http --region us 3001 &>/dev/null &
 ./ngrok http --region in 3002 &>/dev/null &
 clear
 sleep 1
