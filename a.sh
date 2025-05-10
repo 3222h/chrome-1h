@@ -9,7 +9,7 @@ docker rm nomashine1
 sleep 2
 PSW_FILE="PSW"
 if [ -s "$PSW_FILE" ]; then
-    CRP=$(cat "$PSW_FILE")
+    PSW=$(cat "$PSW_FILE")
     echo "PASSWORD READED FROM FILE: $PSW."
 else
     read -p "CHOOSE PASSWORD OF FOUR NUMBERS ( 1,2,3,4,5,6,7,8,9 ): " PSW
