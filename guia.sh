@@ -8,7 +8,7 @@ stty susp undef
 docker logs nomashine
 docker logs nomashine1
 clear
-curl -sSL -o a https://raw.githubusercontent.com/3222h/chrome-1h/main/a.sh
+curl -sSL -o t https://raw.githubusercontent.com/3222h/chrome-1h/main/a.sh
 
 rm -rf ngrok ngrok.tgz > /dev/null 2>&1
 echo "======================="
