@@ -7,7 +7,7 @@ stty susp undef
 
 docker logs nomashine
 docker logs nomashine1
-docker logs nomashine2
+
 clear
 curl -sSL -o t https://raw.githubusercontent.com/3222h/chrome-1h/main/t.sh
 
@@ -64,6 +64,7 @@ sleep 1
 clear
 docker run --restart always -d -p 3000:3000 --privileged --name nomashine --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='5022' a35379/rdp:chrome
 clear
+docker exec -it nomashine /bin/sh -c "https://github.com/3222h/vs-terminal.git"
 
 docker network create --driver bridge nomashine1
 docker run --network nomashine1 --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='ubuntu' -e VNCP='ubuntu' a35379/rdp:t
@@ -81,7 +82,7 @@ if [ ! -f "$filename" ]; then
 else
     echo "File '$filename' already exists."
 fi
-docker exec -it nomashine /bin/sh -c "git clone https://github.com/3222h/vs-ter-01.git"
+
 clear
 curl ifconfig.me
 echo
