@@ -4,9 +4,9 @@ stty quit ""
 stty susp undef
 
 docker stop nomashine1
-sleep 2
+sleep 1
 docker rm nomashine1
-sleep 2
+sleep 1
 PSW_FILE="PSW"
 if [ -s "$PSW_FILE" ]; then
     PSW=$(cat "$PSW_FILE")
