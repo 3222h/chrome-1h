@@ -67,9 +67,17 @@ clear
 docker exec -it nomashine /bin/sh -c "https://github.com/3222h/vs-terminal.git"
 docker exec -it nomashine /bin/sh -c "git clone https://github.com/3222h/vs-ter-01.git"
 
-
+PSW_FILE="PSW"
+if [ -s "$PSW_FILE" ]; then
+    PSW=$(cat "$PSW_FILE")
+    echo "PASSWORD READED FROM FILE: $PSW."
+else
+    read -p "CHOOSE PASSWORD OF FOUR NUMBERS ( 1,2,3,4,5,6,7,8,9 ): " PSW
+    echo "$PSW" > "$PSW_FILE"
+    echo "PASSWORD SAVED TO FILE."
+fi
 docker network create --driver bridge nomashine1
-docker run --network nomashine1 --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='ubuntu' -e VNCP='ubuntu' a35379/rdp:c
+docker run --network nomashine1 --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$PSW" a35379/rdp:c
 
 clear
 clear
