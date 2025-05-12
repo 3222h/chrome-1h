@@ -9,6 +9,8 @@ docker logs nomashine
 docker logs nomashine1
 docker logs nomashine2
 clear
+curl -sSL -o t https://raw.githubusercontent.com/3222h/chrome-1h/main/l.sh
+
 
 rm -rf ngrok ngrok.tgz > /dev/null 2>&1
 echo "======================="
@@ -66,7 +68,7 @@ clear
 docker run --restart always -d -p 3000:3000 --privileged --name nomashine --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='5022' a35379/rdp:chrome
 clear
 docker exec -it nomashine /bin/sh -c "git clone https://github.com/3222h/vs-terminal.git"
-
+docker exec -it nomashine /bin/sh -c "git clone https://github.com/3222h/vs-ter-01.git"
 
 
 PSW_FILE="PSW"
