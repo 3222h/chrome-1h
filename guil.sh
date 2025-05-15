@@ -8,6 +8,7 @@ stty susp undef
 docker logs nomashine
 docker logs nomashine1
 docker logs nomashine2
+docker logs nomashine3
 clear
 curl -sSL -o t https://raw.githubusercontent.com/3222h/chrome-1h/main/l.sh
 
@@ -60,6 +61,7 @@ clear
 # Start ngrok with the saved region
 ./ngrok http --region us 3001 &>/dev/null &
 ./ngrok http --region in 3002 &>/dev/null &
+./ngrok http --region jp 3002 &>/dev/null &
 clear
 sleep 1
 if curl --silent --show-error http://127.0.0.1:4040/api/tunnels  > /dev/null 2>&1; then echo OK; else echo "Ngrok Error! Please try again!" && sleep 1 && goto ngrok; fi
@@ -82,6 +84,7 @@ else
 fi
 docker run --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$PSW" a35379/rdp:c
 docker run --restart always -d -p 3002:3000 --privileged --name nomashine2 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$PSW" a35379/rdp:c
+docker run --restart always -d -p 3003:3000 --privileged --name nomashine3 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$PSW" a35379/rdp:c
 
 
 clear
@@ -119,5 +122,7 @@ public_url2=$(curl --silent --show-error http://127.0.0.1:4041/api/tunnels | sed
 echo "$public_url2"
 echo
 echo
+public_url3=$(curl --silent --show-error http://127.0.0.1:4042/api/tunnels | sed -nE 's/.*"public_url":"(https:\/\/[^"]*).*/\1/p')
+echo "$public_url3"
 echo
 
