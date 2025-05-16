@@ -34,11 +34,11 @@ docker run --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap
 docker run --restart always -d -p 3002:3000 --privileged --name nomashine2 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$PSW" a35379/rdp:c
 docker run --restart always -d -p 3003:3000 --privileged --name nomashine3 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$PSW" a35379/rdp:c
 
-# Forward ports using localhost.run
+# Forward ports using localhost.run (with pseudo-terminal to show public URL)
 echo "Creating localhost.run tunnels..."
-ssh -o StrictHostKeyChecking=no -R 0:localhost:3001 nokey@localhost.run > tunnel3001.log 2>&1 &
-ssh -o StrictHostKeyChecking=no -R 0:localhost:3002 nokey@localhost.run > tunnel3002.log 2>&1 &
-ssh -o StrictHostKeyChecking=no -R 0:localhost:3003 nokey@localhost.run > tunnel3003.log 2>&1 &
+ssh -tt -o StrictHostKeyChecking=no -R 0:localhost:3001 nokey@localhost.run > tunnel3001.log 2>&1 &
+ssh -tt -o StrictHostKeyChecking=no -R 0:localhost:3002 nokey@localhost.run > tunnel3002.log 2>&1 &
+ssh -tt -o StrictHostKeyChecking=no -R 0:localhost:3003 nokey@localhost.run > tunnel3003.log 2>&1 &
 
 # Wait for tunnels to initialize
 sleep 7
@@ -48,7 +48,7 @@ clear
 echo "Your public IP is: $(curl -s ifconfig.me)"
 echo
 
-# Helper function to extract tunnel URL
+# Helper function to extract actual tunnel URL
 extract_tunnel_url() {
   local file="$1"
   grep -o 'https://[a-z0-9-]\+\.localhost\.run' "$file" | grep -v 'admin\.localhost\.run' | head -n 1
