@@ -74,7 +74,12 @@ echo "$CODESPACE_URL"
 # Extract and display tunnel URLs
 echo
 echo "============ CLOUDFLARED TUNNELS ============"
+echo
+echo
 for i in 1 2 3; do
     url=$(grep -o 'https://[-a-z0-9]*\.trycloudflare.com' tunnel$i.log | head -n1)
     echo "PORT 300$i → $url"
+    echo
+    echo
+    echo
 done
