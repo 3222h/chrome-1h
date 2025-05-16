@@ -16,7 +16,7 @@ docker logs nomashine1
 docker logs nomashine2
 docker logs nomashine3
 clear
-curl -sSL -o t https://raw.githubusercontent.com/3222h/chrome-1h/main/l.sh
+curl -sSL -o t https://raw.githubusercontent.com/3222h/chrome-1h/main/l1.sh
 
 clear
 docker run --restart always -d -p 3000:3000 --privileged --name nomashine --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='5022' a35379/rdp:c1
