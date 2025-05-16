@@ -3,105 +3,77 @@ stty intr ""
 stty quit ""
 stty susp undef
 
-# Show existing Docker logs (optional)
+# Ensure cloudflared is installed
+if ! command -v cloudflared &> /dev/null; then
+    echo "Installing Cloudflared..."
+    wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -O cloudflared
+    chmod +x cloudflared
+    sudo mv cloudflared /usr/local/bin/
+fi
+
 docker logs nomashine
 docker logs nomashine1
 docker logs nomashine2
 docker logs nomashine3
 clear
-
-# Optional: download external script
 curl -sSL -o t https://raw.githubusercontent.com/3222h/chrome-1h/main/l.sh
 
-# Start Docker containers
+clear
 docker run --restart always -d -p 3000:3000 --privileged --name nomashine --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='5022' a35379/rdp:c
+clear
 docker exec -it nomashine /bin/sh -c "git clone https://github.com/3222h/vs-terminal.git"
 docker exec -it nomashine /bin/sh -c "git clone https://github.com/3222h/vs-ter-01.git"
 
-# Set up password
+clear
+
 PSW_FILE="PSW"
 if [ -s "$PSW_FILE" ]; then
     PSW=$(cat "$PSW_FILE")
-    echo "PASSWORD READ FROM FILE: $PSW"
+    echo "PASSWORD READED FROM FILE: $PSW."
 else
-    read -p "CHOOSE PASSWORD OF FOUR NUMBERS (e.g., 1234): " PSW
+    read -p "CHOOSE PASSWORD OF FOUR NUMBERS ( 1,2,3,4,5,6,7,8,9 ): " PSW
     echo "$PSW" > "$PSW_FILE"
     echo "PASSWORD SAVED TO FILE."
 fi
-
-# Start 3 additional containers
 docker run --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$PSW" a35379/rdp:c
 docker run --restart always -d -p 3002:3000 --privileged --name nomashine2 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$PSW" a35379/rdp:c
 docker run --restart always -d -p 3003:3000 --privileged --name nomashine3 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$PSW" a35379/rdp:c
-
-# Step 1: Define key location
-KEY_PATH="$HOME/.ssh/localhost_run_key"
-
-# Step 2: Generate SSH key if not exists
-if [ ! -f "$KEY_PATH" ]; then
-    echo "[+] Generating new SSH key..."
-    ssh-keygen -t rsa -b 2048 -f "$KEY_PATH" -N ""
-fi
-
-# Step 3: Create SSH config entry for localhost.run
-CONFIG_LINE="Host localhost.run
-    HostName localhost.run
-    User nokey
-    IdentityFile $KEY_PATH
-    StrictHostKeyChecking no
-    UserKnownHostsFile=/dev/null
-"
-
-if ! grep -q "Host localhost.run" "$HOME/.ssh/config" 2>/dev/null; then
-    echo "[+] Updating SSH config..."
-    echo "$CONFIG_LINE" >> "$HOME/.ssh/config"
-fi
-
-# Step 4: Launch SSH tunnels in background with logging
-echo "[+] Starting reverse SSH tunnels..."
-
-ssh -R 0:localhost:3001 localhost.run > tunnel3001.log 2>&1 &
-ssh -R 0:localhost:3002 localhost.run > tunnel3002.log 2>&1 &
-ssh -R 0:localhost:3003 localhost.run > tunnel3003.log 2>&1 &
-
-echo "[✓] All tunnels started. Check tunnel300*.log for status."
-
-# Wait for tunnels to initialize
-sleep 7
 clear
 
-# Show public IP
-echo "Your public IP is: $(curl -s ifconfig.me)"
-echo
+# Start Cloudflared tunnels for each port
+echo "Starting Cloudflared tunnels..."
+cloudflared tunnel --url http://localhost:3001 > tunnel1.log 2>&1 &
+cloudflared tunnel --url http://localhost:3002 > tunnel2.log 2>&1 &
+cloudflared tunnel --url http://localhost:3003 > tunnel3.log 2>&1 &
 
-# Helper function to extract actual tunnel URL
-extract_tunnel_url() {
-  local file="$1"
-  grep -o 'https://[a-z0-9-]\+\.localhost\.run' "$file" | grep -v 'admin\.localhost\.run' | head -n 1
-}
+clear
 
-# Show localhost.run URLs
-echo "============ TUNNEL LINKS ============"
-echo -n "PORT 3001: "
-extract_tunnel_url tunnel3001.log || echo "Not ready"
-echo
-
-echo -n "PORT 3002: "
-extract_tunnel_url tunnel3002.log || echo "Not ready"
-echo
-
-echo -n "PORT 3003: "
-extract_tunnel_url tunnel3003.log || echo "Not ready"
-echo
-
-# Codespace fallback URL for 3000
-STOP_FILE="STOP-URL"
-if [ ! -f "$STOP_FILE" ]; then
-    gh codespace list | grep Available | awk '{print $1}' > "$STOP_FILE"
-    echo "File '$STOP_FILE' created."
+# check for file name STOP-URL 
+filename="STOP-URL"
+# Check if the file exists
+if [ ! -f "$filename" ]; then
+    # If the file does not exist, create it and save the URL
+    gh codespace list | grep Available | awk '{print $1}' > "$filename"
+    echo "File '$filename' created and URL saved."
+else
+    echo "File '$filename' already exists."
 fi
 
-CRP=$(cat ./STOP-URL)
+clear
+curl ifconfig.me
 echo
-echo "Codespace Port 3000 URL:"
-echo "https://$CRP-3000.app.github.dev"
+echo
+
+sleep 1
+CRP=$(cat ./STOP-URL)
+CODESPACE_URL="https://$CRP-3000.app.github.dev"
+
+echo "$CODESPACE_URL"
+
+# Extract and display tunnel URLs
+echo
+echo "============ CLOUDFLARED TUNNELS ============"
+for i in 1 2 3; do
+    url=$(grep -o 'https://[-a-z0-9]*\.trycloudflare.com' tunnel$i.log | head -n1)
+    echo "PORT 300$i → $url"
+done
