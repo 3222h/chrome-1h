@@ -34,11 +34,37 @@ docker run --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap
 docker run --restart always -d -p 3002:3000 --privileged --name nomashine2 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$PSW" a35379/rdp:c
 docker run --restart always -d -p 3003:3000 --privileged --name nomashine3 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP="$PSW" a35379/rdp:c
 
-# Forward ports using localhost.run (with pseudo-terminal to show public URL)
-echo "Creating localhost.run tunnels..."
-ssh -R 0:localhost:3001 nokey@localhost.run > tunnel3001.log 2>&1 &
-ssh -R 0:localhost:3002 nokey@localhost.run > tunnel3002.log 2>&1 &
-ssh -R 0:localhost:3003 nokey@localhost.run > tunnel3003.log 2>&1 &
+# Step 1: Define key location
+KEY_PATH="$HOME/.ssh/localhost_run_key"
+
+# Step 2: Generate SSH key if not exists
+if [ ! -f "$KEY_PATH" ]; then
+    echo "[+] Generating new SSH key..."
+    ssh-keygen -t rsa -b 2048 -f "$KEY_PATH" -N ""
+fi
+
+# Step 3: Create SSH config entry for localhost.run
+CONFIG_LINE="Host localhost.run
+    HostName localhost.run
+    User nokey
+    IdentityFile $KEY_PATH
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+"
+
+if ! grep -q "Host localhost.run" "$HOME/.ssh/config" 2>/dev/null; then
+    echo "[+] Updating SSH config..."
+    echo "$CONFIG_LINE" >> "$HOME/.ssh/config"
+fi
+
+# Step 4: Launch SSH tunnels in background with logging
+echo "[+] Starting reverse SSH tunnels..."
+
+ssh -R 0:localhost:3001 localhost.run > tunnel3001.log 2>&1 &
+ssh -R 0:localhost:3002 localhost.run > tunnel3002.log 2>&1 &
+ssh -R 0:localhost:3003 localhost.run > tunnel3003.log 2>&1 &
+
+echo "[✓] All tunnels started. Check tunnel300*.log for status."
 
 # Wait for tunnels to initialize
 sleep 7
