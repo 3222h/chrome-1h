@@ -47,6 +47,7 @@ cloudflared tunnel --url http://localhost:3002 > tunnel2.log 2>&1 &
 cloudflared tunnel --url http://localhost:3003 > tunnel3.log 2>&1 &
 
 clear
+sleep 8
 
 # check for file name STOP-URL 
 filename="STOP-URL"
