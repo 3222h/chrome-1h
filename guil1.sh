@@ -36,9 +36,9 @@ docker run --restart always -d -p 3003:3000 --privileged --name nomashine3 --cap
 
 # Forward ports using localhost.run (with pseudo-terminal to show public URL)
 echo "Creating localhost.run tunnels..."
-ssh -tt -o StrictHostKeyChecking=no -R 0:localhost:3001 nokey@localhost.run > tunnel3001.log 2>&1 &
-ssh -tt -o StrictHostKeyChecking=no -R 0:localhost:3002 nokey@localhost.run > tunnel3002.log 2>&1 &
-ssh -tt -o StrictHostKeyChecking=no -R 0:localhost:3003 nokey@localhost.run > tunnel3003.log 2>&1 &
+ssh -R 0:localhost:3001 nokey@localhost.run > tunnel3001.log 2>&1 &
+ssh -R 0:localhost:3002 nokey@localhost.run > tunnel3002.log 2>&1 &
+ssh -R 0:localhost:3003 nokey@localhost.run > tunnel3003.log 2>&1 &
 
 # Wait for tunnels to initialize
 sleep 7
