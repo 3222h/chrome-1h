@@ -36,9 +36,9 @@ else
     echo "PASSWORD SAVED TO FILE."
 fi
 docker network create --driver bridge nomashine1
-docker run --network nomashine1 --dns=94.140.14.14 --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5!0@2*2(' -e VNCP="$PSW" a35379/rdp:c1
-docker run --network nomashine1 --dns=94.140.14.14 --restart always -d -p 3002:3000 --privileged --name nomashine2 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5!0@2*2(' -e VNCP="$PSW" a35379/rdp:c1
-docker run --network nomashine1 --dns=94.140.14.14 --restart always -d -p 3003:3000 --privileged --name nomashine3 --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5!0@2*2(' -e VNCP="$PSW" a35379/rdp:c1
+docker run --network nomashine1 --dns=94.140.14.14 --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=1g --cpus="0.2" --memory="1000m" -e USERP='5!0@2*2(' -e VNCP="$PSW" a35379/rdp:c1
+docker run --network nomashine1 --dns=94.140.14.14 --restart always -d -p 3002:3000 --privileged --name nomashine2 --cap-add=SYS_PTRACE --shm-size=1g --cpus="0.2" --memory="1000m" -e USERP='5!0@2*2(' -e VNCP="$PSW" a35379/rdp:c1
+docker run --network nomashine1 --dns=94.140.14.14 --restart always -d -p 3003:3000 --privileged --name nomashine3 --cap-add=SYS_PTRACE --shm-size=1g --cpus="0.2" --memory="1000m" -e USERP='5!0@2*2(' -e VNCP="$PSW" a35379/rdp:c1
 clear
 
 # Start Cloudflared tunnels for each port
