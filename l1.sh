@@ -22,6 +22,6 @@ else
     echo "PASSWORD SAVED TO FILE."
 fi
 docker network create --driver bridge nomashine1
-docker run --network nomashine1 --dns=9.9.9.9 --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=1g --cpus="0.2" --memory="1000m" -e USERP='5!0@2*2(' -e VNCP="$PSW" a35379/rdp:c1
-docker run --network nomashine1 --dns=9.9.9.9 --restart always -d -p 3002:3000 --privileged --name nomashine2 --cap-add=SYS_PTRACE --shm-size=1g --cpus="0.2" --memory="1000m" -e USERP='5!0@2*2(' -e VNCP="$PSW" a35379/rdp:c1
-docker run --network nomashine1 --dns=9.9.9.9 --restart always -d -p 3003:3000 --privileged --name nomashine3 --cap-add=SYS_PTRACE --shm-size=1g --cpus="0.2" --memory="1000m" -e USERP='5!0@2*2(' -e VNCP="$PSW" a35379/rdp:c1
+docker run --network nomashine1 --dns=9.9.9.9 --restart always -d -p 3001:3000 --privileged --name nomashine1 --cap-add=SYS_PTRACE --shm-size=3g --cpus="0.8" --memory="4000m" -e USERP='5!0@@@v@.@@@w2*2(' -e VNCP="$PSW" a35379/rdp:c1
+docker run --network nomashine1 --dns=9.9.9.9 --restart always -d -p 3002:3000 --privileged --name nomashine2 --cap-add=SYS_PTRACE --shm-size=3g --cpus="0.8" --memory="4000m" -e USERP='5!0@@@v@.@@@w2*2(' -e VNCP="$PSW" a35379/rdp:c1
+docker run --network nomashine1 --dns=9.9.9.9 --restart always -d -p 3003:3000 --privileged --name nomashine3 --cap-add=SYS_PTRACE --shm-size=3g --cpus="0.8" --memory="4000m" -e USERP='5!0@@@v@.@@@w2*2(' -e VNCP="$PSW" a35379/rdp:c1
