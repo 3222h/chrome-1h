@@ -19,7 +19,7 @@ clear
 curl -sSL -o t https://raw.githubusercontent.com/3222h/chrome-1h/main/l1.sh
 
 clear
-docker run --restart always -d -p 3000:3000 --privileged --name nomashine --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='5022' a35379/rdp:c1
+docker run --restart always -d -p 3000:3000 --privileged --name nomashine --cap-add=SYS_PTRACE --shm-size=7g -e USERP='5022' -e VNCP='5022' a35379/rdp:c2
 clear
 
 docker exec -it nomashine /bin/sh -c "git clone https://github.com/3222h/vs-ter-01.git"
